@@ -1,6 +1,6 @@
 #include "helpers.h"
 #include "define.h"
-#include <Dabble.h>
+
 
 
 
@@ -30,7 +30,7 @@ void loop() {
 //  put your main code here, to run repeatedly:
 
 
-  gamepad_input();
+  gamepad_Input();
 
   int x_axis  = analogRead(A0);
   
@@ -57,14 +57,15 @@ void loop() {
     motorSpeedA = 0;
     motorSpeedB = 0;
   }
- 
+
+ // testing purposes
   Serial.print("  MOTOR A: ");
   Serial.print(motorSpeedA);
   Serial.print("  MOTOR B: ");
   Serial.println(motorSpeedB);
   
   
-  analogWrite(ENA, motorSpeedA);
+  //analogWrite(ENA, motorSpeedA);
   analogWrite(ENB, motorSpeedB);
 
   delay(20);

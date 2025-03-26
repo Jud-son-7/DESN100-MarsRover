@@ -2,6 +2,7 @@
 #define HELPERS_H
 #include "Arduino.h"
 #include "define.h"
+#include <Dabble.h>
 
 int setSpeed(int value, int min, int max)
 {
@@ -15,7 +16,7 @@ void setDirection(int in1, int in2)
     digitalWrite(in2, HIGH);
 }
 
-void Gamepad_Input(void) //detects input from gamepad app
+void gamepad_Input(void) //detects input from gamepad app
 {
   Dabble.processInput();             //this function is used to refresh data obtained from smartphone.
   if (GamePad.isUpPressed())
