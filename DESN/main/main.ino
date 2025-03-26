@@ -1,5 +1,6 @@
 #include "helpers.h"
 #include "define.h"
+#include <Dabble.h>
 
 
 
@@ -12,6 +13,9 @@ int motorSpeedB = 0;
 
 void setup() {
   // put your setup code here, to run once:
+  Serial.begin(250000); // make sure Serial Monitor is also set at this baud rate.
+  Dabble.begin(9600);      
+  pinMode(8,OUTPUT); // For testing with LED
   pinMode(ENA, OUTPUT);
   pinMode(ENB, OUTPUT);
   pinMode(IN1, OUTPUT);
@@ -24,6 +28,9 @@ void setup() {
 
 void loop() {
 //  put your main code here, to run repeatedly:
+
+
+  gamepad_input();
 
   int x_axis  = analogRead(A0);
   
@@ -62,4 +69,4 @@ void loop() {
 
   delay(20);
 }
-
+ //for making bluetooth work. Make sure to install "dabble" library in arduino IDE

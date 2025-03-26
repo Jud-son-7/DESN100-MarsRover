@@ -1,6 +1,8 @@
 #ifndef MY_DEFINES_H
 #define MY_DEFINES_H
 
+#define CUSTOM_SETTINGS
+#define INCLUDE_GAMEPAD_MODULE
 #define ENA 9
 #define ENB 10
 #define IN1 4
