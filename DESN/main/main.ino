@@ -1,108 +1,73 @@
-#define CUSTOM_SETTINGS
-#define INCLUDE_GAMEPAD_MODULE
-#include <Dabble.h> //for making bluetooth work. Make sure to install "dabble" library in arduino IDE
+#include "helpers.h"
+#include "define.h"
 
-void right_turn(void);
-void gamepad_input(void);
+
+
+
+int range = MAX - MIN;
+int MID = range/2;
+
+
+int motorSpeedA = 0;
+int motorSpeedB = 0;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(250000); // make sure Serial Monitor is also set at this baud rate.
   Dabble.begin(9600);      
   pinMode(8,OUTPUT); // For testing with LED
-
+  pinMode(ENA, OUTPUT);
+  pinMode(ENB, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT); 
+  pinMode(IN4, OUTPUT);
+  Serial.begin(9600);
+  setDirection(IN1, IN2);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  right_turn();
-  gamepad_input();
-
-}
-
-void right_turn(void)
-{
-  //turn the wheel right
-}
+//  put your main code here, to run repeatedly:
 
 
-void Gamepad_Input(void) //detects input from gamepad app
-{
-  Dabble.processInput();             //this function is used to refresh data obtained from smartphone.
-  if (GamePad.isUpPressed())
-  {
-    Serial.print("KeyPressed: UP");
-    Serial.println();
-    
-    //put drive forward here
-  }
+  gamepad_Input();
 
-  if (GamePad.isDownPressed())
-  {
-    Serial.print("KeyPressed: DOWN ");
-    Serial.println();
-    //put drive backwards here
-  }
-
-  if (GamePad.isLeftPressed())
-  {
-    Serial.print("KeyPressed: LEFT ");
-    Serial.println();
-    //put turn left here
-  }
-
-  if (GamePad.isRightPressed())
-  {
-    Serial.print("KeyPressed: RIGHT ");
-    Serial.println();
-    //put turn right here
-  }
-
-  if (GamePad.isSquarePressed())
-  {
-    Serial.print("KeyPressed: SQUARE");
-    Serial.println();
-    //lift bucket up here
-  }
-
-  if (GamePad.isCirclePressed())
-  {
-    Serial.print("KeyPressed: CIRCLE");
-    Serial.println();
-    //lower trapdoor down here
-  }
-
-  if (GamePad.isCrossPressed())
-  {
-    Serial.print("KeyPressed: CROSS");
-    Serial.println();
-    //move bucket down here
-  }
-
-  if (GamePad.isTrianglePressed())
-  {
-    Serial.print("KeyPressed: TRIANGLE");
-    Serial.println();
-    //lift trapdoor up here
-  }
-
-  if (GamePad.isStartPressed())
-  {
-    Serial.print("KeyPressed: START");
-    Serial.println();
-    //horn
-    digitalWrite(8,HIGH); //turns LED on
-  } else {
-    digitalWrite(8,LOW); //turns LED off when button is not pressed
-  }
+  int x_axis  = analogRead(A0);
   
-  if (GamePad.isSelectPressed())
+  
+  int y_axis = analogRead(A1);
+  if ( y_axis <= MID - (0.1*range))
   {
-    Serial.print("KeyPressed: SELECT");
-    Serial.println();
+    motorSpeedA = setSpeed(y_axis, MID - (0.05*range),  MIN);
+    motorSpeedB = motorSpeedA;
+    setDirection(IN2, IN1);//Backwards
+    setDirection(IN4, IN3);//Backwards
   }
+
+  else if ( y_axis >= MID + (0.1*range))
+  {
+    motorSpeedA = setSpeed(y_axis, MID + (0.05*range), MAX);
+    motorSpeedB = motorSpeedA;
+    setDirection(IN1, IN2);//Forwards
+    setDirection(IN3, IN4);//Forwards
+  }
+
+  else
+  {
+    motorSpeedA = 0;
+    motorSpeedB = 0;
+  }
+
+ // testing purposes
+  Serial.print("  MOTOR A: ");
+  Serial.print(motorSpeedA);
+  Serial.print("  MOTOR B: ");
+  Serial.println(motorSpeedB);
+  
+  
+  //analogWrite(ENA, motorSpeedA);
+  analogWrite(ENB, motorSpeedB);
+
+  delay(20);
 }
-
-
-
-
+ //for making bluetooth work. Make sure to install "dabble" library in arduino IDE
