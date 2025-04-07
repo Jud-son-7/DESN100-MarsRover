@@ -4,8 +4,8 @@
 int range = MAX - MIN;
 
 
-int motorSpeedA = 0;
-int motorSpeedB = 0;
+int rightMotors = 0;
+int leftMotors = 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -33,40 +33,55 @@ void loop() {
   int y_axis = /*analogRead(A1)*/ GamePad.getYaxisData();
   if ( y_axis <= MID -1)
   {
-    motorSpeedA = setSpeed(y_axis, MID - 1, MIN);
-    motorSpeedB = motorSpeedA;
+    rightMotors = setSpeed(y_axis, MID - 1, MIN);
+    leftMotors = rightMotors;
     setDirection(IN2, IN1);//Backwards
     setDirection(IN4, IN3);//Backwards
   }
 
   else if ( y_axis >= MID + 1)
   {
-    motorSpeedA = setSpeed(y_axis, MID + 1, MAX);
-    motorSpeedB = motorSpeedA;
+    rightMotors = setSpeed(y_axis, MID + 1, MAX);
+    leftMotors = rightMotors;
     setDirection(IN1, IN2);//Forwards
     setDirection(IN3, IN4);//Forwards
   }
 
   else
   {
-    motorSpeedA = 0;
-    motorSpeedB = 0;
+    rightMotors = 0;
+    leftMotors = 0;
   }
 
   if (x_axis <= MID - 1)
   {
-     
+     int diff = setSpeed(x_axis, MID - 1, MIN);
+     rightMotors += diff;
+     leftMotors -= diff;
+
+     leftMotors = leftMotors <= 30 ? 0: leftMotors;
+     rightMotors = rightMotors >= 255 ? 255 : rightMotors;
+  }
+
+  else if (x_axis >= MID + 1)
+  {
+    int diff = setSpeed(x_axis, MID + 1, MAX);
+     rightMotors -= diff;
+     leftMotors += diff;
+
+     rightMotors = rightMotors <= 30 ? 0: rightMotors;
+     leftMotors = leftMotors >= 255 ? 255 : leftMotors;
   }
 
  // testing purposes
   Serial.print("  MOTOR A: ");
-  Serial.print(motorSpeedA);
+  Serial.print(rightMotors);
   Serial.print("  MOTOR B: ");
-  Serial.println(motorSpeedB);
+  Serial.println(leftMotors);
   
   
-   analogWrite(ENA, motorSpeedA);
-  analogWrite(ENB, motorSpeedB);
+  analogWrite(ENA, rightMotors);
+  analogWrite(ENB, leftMotors);
 
   delay(20);
 }
