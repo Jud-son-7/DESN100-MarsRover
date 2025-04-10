@@ -18,6 +18,8 @@ void setup() {
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT); 
   pinMode(IN4, OUTPUT);
+  pinMode(EXC, OUTPUT);
+  excavator.attach(EXC, 600, 2300);
   setDirection(IN1, IN2);
 }
 

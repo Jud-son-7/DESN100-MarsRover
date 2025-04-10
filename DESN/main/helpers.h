@@ -52,6 +52,9 @@ void gamepad_Input(void) //detects input from gamepad app
   {
     Serial.print("KeyPressed: SQUARE");
     Serial.println();
+
+    excavator.write(30);
+    delay(1000);
     //lift bucket up here
   }
 
@@ -73,7 +76,10 @@ void gamepad_Input(void) //detects input from gamepad app
   {
     Serial.print("KeyPressed: TRIANGLE");
     Serial.println();
-    //lift trapdoor up here
+    //lift excavator up
+
+    excavator.write(135);
+    delay(1000);
   }
 
   if (GamePad.isStartPressed())
