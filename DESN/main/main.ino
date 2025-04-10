@@ -20,6 +20,7 @@ void setup() {
   pinMode(IN4, OUTPUT);
   pinMode(EXC, OUTPUT);
   excavator.attach(EXC, 600, 2300);
+  trapdoor.attach(TRP, 600, 2300);
   setDirection(IN1, IN2);
 }
 

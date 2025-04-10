@@ -55,7 +55,7 @@ void gamepad_Input(void) //detects input from gamepad app
 
     excavator.write(30);
     delay(1000);
-    //lift bucket up here
+    //lower excavator
   }
 
   if (GamePad.isCirclePressed())
@@ -63,13 +63,19 @@ void gamepad_Input(void) //detects input from gamepad app
     Serial.print("KeyPressed: CIRCLE");
     Serial.println();
     //lower trapdoor down here
+
+    trapdoor.write(45);
+    delay(1000);
   }
 
   if (GamePad.isCrossPressed())
   {
     Serial.print("KeyPressed: CROSS");
     Serial.println();
-    //move bucket down here
+    //lift trapdoor up
+
+    trapdoor.write(45);
+    delay(1000);
   }
 
   if (GamePad.isTrianglePressed())

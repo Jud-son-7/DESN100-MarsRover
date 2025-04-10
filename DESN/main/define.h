@@ -15,7 +15,9 @@
 #define MIN -7
 #define MID 0
 #define EXC 3
+#define TRP 11
 
 Servo excavator;
+Servo trapdoor;
 
 #endif
