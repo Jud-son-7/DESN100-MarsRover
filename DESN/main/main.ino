@@ -10,7 +10,7 @@ int leftMotors = 0;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(250000); // make sure Serial Monitor is also set at this baud rate.
-  Dabble.begin(9600);      
+  Dabble.begin(9600, 0, 1);      
   pinMode(8,OUTPUT); // For testing with LED
   pinMode(ENA, OUTPUT);
   pinMode(ENB, OUTPUT);
